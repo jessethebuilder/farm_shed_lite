@@ -40,5 +40,25 @@ module HtmlHelper
       options_for_select(options)
     end
   end
+  
+  def array_for_select(arr, selected_items: nil)
+    options = arr.each.collect{ |i| [i.to_s.titlecase, i] }
+    if selected_items
+      options_for_select(options, selected_items)
+    else
+      options_for_select(options)
+    end
+  end
+
+  def hash_for_select(hash, selected_items: nil)
+    options = []
+    hash.each{ |k, v| options << [v, k] }
+    options_for_select(options, selected_items)
+  end
+
+  def array_of_hashes_for_select(array, id_key, value_key, selected_items: nil)
+    options = array.collect{ |hash| [hash[id_key], hash[value_key]] }
+    options_for_select(options, selected_items)
+  end
 
 end

@@ -31,13 +31,14 @@ group :test do
   # gem 'selenium-webdriver'
   gem 'shoulda'
   # gem 'launchy', '~> 2.3.0'
-  # gem 'poltergeist'
+  gem 'poltergeist'
 end
 
 # gem 'carrierwave'
 # gem 'mini_magick'
 # gem 'fog'
 
+gem 'geocoder'
 
 group :production do
   # gem 'faker'

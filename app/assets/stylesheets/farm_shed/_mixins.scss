@@ -1,0 +1,30 @@
+@mixin horizontal_menu($hor_padding, $vert_padding){
+  margin: 0;
+  list-style-type: none;
+  // text-align: center;
+  padding-top: $vert_padding;
+  padding-bottom: $vert_padding;
+  padding-left: 0px;
+  padding-right: 0px;
+  
+  li{
+    display: inline; 
+    padding-left: $hor_padding;
+    padding-right: $hor_padding;      
+  }
+  
+  li:first-child{
+    padding-left: 0px;
+  }
+  
+  li:last-child{
+    padding-right: 0px;
+  }
+}
+
+@mixin border_radius($rad){
+  -webkit-border-radius: $rad;
+  -moz-border-radius: $rad;
+  border-radius: $rad;
+}
+ 

@@ -1,4 +1,4 @@
-require 'geocoder/engine'
+require 'geocoder'
 
 module FarmShed
   class Engine < ::Rails::Engine

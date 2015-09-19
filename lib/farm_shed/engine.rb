@@ -1,3 +1,5 @@
+require 'geocoder'
+
 module FarmShed
   class Engine < ::Rails::Engine
     config.generators do |g|

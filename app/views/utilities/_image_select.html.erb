@@ -3,7 +3,9 @@
     <div class="form-group">
       <%= f.label image_attr, label.html_safe, :class => 'control-label' %>
       <%= f.file_field image_attr, :multiple => multiple, :class => 'form-control' %>
-      <%= f.hidden_field "#{image_attr}_cache".to_sym %>
+      <% unless multiple -%>
+      	<%= f.hidden_field "#{image_attr}_cache".to_sym %>
+      <% end -%>	
     </div>
 
     <% if local_assigns[:accepts_remote] -%>

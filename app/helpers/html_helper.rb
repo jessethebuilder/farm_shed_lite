@@ -34,12 +34,8 @@ module HtmlHelper
   #------------ For Select tools -----------------------
   def for_select(collection, id_method, value_method, selected_ids: nil)
     options = collection.each.collect{ |item| [item.send(id_method), item.send(value_method)] }
-    if selected_ids
-      options_for_select(options, selected_ids)
-    else
-      options_for_select(options)
-    end
-  end
+    options_for_select(options, selected_items: selected_ids)
+   end
   
   def array_for_select(arr, selected_items: nil)
     options = arr.each.collect{ |i| [i.to_s.titlecase, i] }

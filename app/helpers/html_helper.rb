@@ -61,4 +61,8 @@ module HtmlHelper
     options_for_select(options, selected_items)
   end
 
+  def options_for_select(options, selected_items:nil, alphabetize: true)
+    options.sort!{ |x, y| x <=> y } if alphabetize 
+    super(options, selected_items)
+  end
 end

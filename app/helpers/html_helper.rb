@@ -32,29 +32,25 @@ module HtmlHelper
   end
   
   #------------ For Select tools -----------------------
-  def for_select(collection, id_method, value_method, selected_ids: nil)
+  def for_select(collection, id_method, value_method, selected_ids: nil, alphabetize: true)
     options = collection.each.collect{ |item| [item.send(id_method), item.send(value_method)] }
-    options_for_select(options, selected_items: selected_ids)
+    options_for_select(options, selected_items: selected_ids, alphabetize: alphabetize)
    end
   
-  def array_for_select(arr, selected_items: nil)
+  def array_for_select(arr, selected_items: nil, alphabetize: true)
     options = arr.each.collect{ |i| [i.to_s.titlecase, i] }
-    if selected_items
-      options_for_select(options, selected_items)
-    else
-      options_for_select(options)
+    options_for_select(options, selected_items: selected_items, alphabetize: alphabetize)
     end
-  end
 
-  def hash_for_select(hash, selected_items: nil)
+  def hash_for_select(hash, selected_items: nil, alphabetize: true)
     options = []
     hash.each{ |k, v| options << [v, k] }
-    options_for_select(options, selected_items)
+    options_for_select(options, selected_items: selected_items, alphabetize: alphabetize)
   end
 
-  def array_of_hashes_for_select(array, id_key, value_key, selected_items: nil)
+  def array_of_hashes_for_select(array, id_key, value_key, selected_items: nil, alphabetize: true)
     options = array.collect{ |hash| [hash[id_key], hash[value_key]] }
-    options_for_select(options, selected_items)
+    options_for_select(options, selected_items: selected_items, alphabetize: alphabetize)
   end
 
   def options_for_select(options, selected_items:nil, alphabetize: true)

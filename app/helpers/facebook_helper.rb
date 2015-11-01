@@ -11,6 +11,13 @@ module FacebookHelper
                        'data-colorscheme' => colorscheme, 'data-layout' => layout, 'data-show-faces' => show_faces,
                        'data-width' => width
   end
+  
+ # <div
+ # class="fb-like"
+ # data-share="true"
+ # data-width="450"
+ # data-show-faces="true">
+#</div>
 
   def like_on_facebook_button(url, width: 100, layout: 'button_count', action: 'like', show_faces: true, share: true)
     content_tag :div, '', :class => 'fb-like', 'data-href' => url, 'data-width' => width,

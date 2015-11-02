@@ -18,8 +18,12 @@ module FacebookHelper
  # data-width="450"
  # data-show-faces="true">
 #</div>
+  def like_on_fb(action: 'like', colorscheme: 'light', href: nil, layout: 'standard', share: false, show_faces: false, width: 450)
+    content_tag :div, '', class: 'fb-like', data: {:action => action, :colorscheme => colorscheme, :href => href, :layout => layout, 
+                                               :share => share, 'show-faces' => show_faces}
+  end
 
-  def like_on_facebook_button(url, width: 100, layout: 'button_count', action: 'like', show_faces: true, share: true)
+  def like_on_facebook_button(url, width: 450, layout: 'button_count', action: 'like', show_faces: true, share: true)
     content_tag :div, '', :class => 'fb-like', 'data-href' => url, 'data-width' => width,
                        'data-layout' => layout, 'data-action' => action,
                        'data-show-faces' => show_faces, 'data-share' => share

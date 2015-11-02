@@ -1,6 +1,6 @@
-module TwitterHelper
-  def tweet_button(related, tweet: '', url: request.url, count: 'horizontal', via: '', lang: 'en', include_script: true, size: 'default')
-    html = content_tag :a, 'Tweet #TwitterStories', :href => "https://twitter.com/share?text=#{tweet}", :class => 'twitter-share-button',
+  module TwitterHelper
+  def tweet_button(related, tweet: '', url: request.url, count: 'horizontal', via: '', lang: 'en', include_script: false, size: 'default')
+    html = content_tag :a, 'Tweet #TwitterStories', :href => "https://twitter.com/share?text=#{to_tweet(url, tweet)}", :class => 'twitter-share-button',
                        'data-lang' => lang,
                        'data-related' => related, 'data-url' => url, 'data-count' => count, 'data-via' => via, 'data-size' => size
     html += "<script>#{tweet_button_script}</script>".html_safe if include_script
@@ -8,13 +8,17 @@ module TwitterHelper
   end
   
   def follow_on_twitter_button(related, link_text: "Follow @#{related}", size: 'medium', show_count: false,
-      lang: 'en', include_script: false)
+      lang: 'en', include_script: true)
     html = content_tag :a, link_text, :href => "http://www.twitter.com/#{related}", :class => 'twitter-follow-button',
                        'data-size' => size, 'data-show-count' => show_count, 'data-lang' => lang
     #html += "<script>#{follow_on_twitter_button_script}</script>".html_safe if include_script
     html += twitter_script if include_script
     html
   end
+  
+  def to_tweet(url, tweet)
+    ActionView::Base.full_sanitizer.sanitize(tweet).gsub('&#13;', '')[0..(140 - url.length)]  
+  end  
 
   def twitter_script
     '<script src="//platform.twitter.com/widgets.js"></script>'.html_safe

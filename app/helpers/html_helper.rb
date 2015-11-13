@@ -33,7 +33,12 @@ module HtmlHelper
   
   #------------ For Select tools -----------------------
   def for_select(collection, id_method, value_method, selected_ids: nil, alphabetize: true)
-    options = collection.each.collect{ |item| [item.send(id_method), item.send(value_method)] }
+    if block_given?
+      options = collection.each.collect{ |item| [item.send(id_method), item.send(value_method), yield(item)] }
+    else
+      options = collection.each.collect{ |item| [item.send(id_method), item.send(value_method)] }
+    end  
+    
     options_for_select(options, selected_items: selected_ids, alphabetize: alphabetize)
    end
   

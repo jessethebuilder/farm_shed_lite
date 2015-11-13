@@ -1,4 +1,39 @@
+require 'rest_helper.rb'
+
 module FacebookHelper
+  include RestHelper
+  BASE = 'https://graph.facebook.com/v2.5/'
+  
+  class FacebookPage
+    def initialize(id, secret, page)
+      @id = id  
+      @secret = secret
+      @page = page
+      @token = "#{@id}|#{@secret}"
+    end  
+     
+    def publish(link: nil, message: nil)
+      RestClient.log = 'stdout'
+      # raise ArgumentError, ':link AND :message cannot be nil' if link.nil? && message.nil?
+      url = "#{BASE}#{@page}/feed"
+      res = url_to_json(url, :method => :post, :params => {'message' => message, :Authorization => "Bearer #{access_token}"})
+    end  
+    
+    def feed
+      res = url_to_json("#{BASE}#{@page}/feed?access_token=#{@token}")
+    end
+    
+    def access_token
+      url_to_json("#{BASE}oauth/access_token?client_id=#{@id}&client_secret=#{@secret}&grant_type=client_credentials")['access_token']
+    end
+    
+    def FacebookPage.temp
+      self.new('1405477876366613', 'bf5306d4d7b7fe4346815f81475acc3c', 'AnysoftSoftwareCompany')
+    end
+    
+  end # end class FacebookPage
+
+  
   def facebook_sdk(app_id, use_authentication: true)
     #this must be included to use any of these functions. Place just after opening <body> tag.
     #if use_authentication = true, you must include a facebookLoginStatusChangeCallback function in scope
@@ -12,12 +47,6 @@ module FacebookHelper
                        'data-width' => width
   end
   
- # <div
- # class="fb-like"
- # data-share="true"
- # data-width="450"
- # data-show-faces="true">
-#</div>
   def like_on_fb(action: 'like', colorscheme: 'light', href: nil, layout: 'standard', share: false, show_faces: false, width: 450)
     content_tag :div, '', class: 'fb-like', data: {:action => action, :colorscheme => colorscheme, :href => href, :layout => layout, 
                                                :share => share, 'show-faces' => show_faces}
@@ -52,3 +81,4 @@ module FacebookHelper
     index ? str[0..(index - 1)] : str
   end
 end
+

@@ -19,6 +19,8 @@ Gem::Specification.new do |s|
   s.add_dependency "rails", "~> 4.2.4"
   
   s.add_dependency "geocoder", "~> 1.2.9" 
+  
+  s.add_dependency "rest-client"
 
   s.add_development_dependency "sqlite3"
   

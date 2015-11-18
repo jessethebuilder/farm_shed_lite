@@ -38,7 +38,11 @@ end
 # gem 'mini_magick'
 # gem 'fog'
 
-gem 'geocoder'
+# gem 'geocoder'
+
+gem 'jquery-rails'
+gem 'sass-rails'
+gem 'bootstrap-sass'
 
 group :production do
   # gem 'faker'

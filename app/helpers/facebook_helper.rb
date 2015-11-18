@@ -16,7 +16,7 @@ module FacebookHelper
       RestClient.log = 'stdout'
       # raise ArgumentError, ':link AND :message cannot be nil' if link.nil? && message.nil?
       url = "#{BASE}#{@page}/feed"
-      res = url_to_json(url, :method => :post, :params => {'message' => message, :Authorization => "Bearer #{access_token}"})
+      res = url_to_json(url, :method => :post, :params => {:message => message, :link => link, :authorization => @token})
     end  
     
     def feed
@@ -24,13 +24,13 @@ module FacebookHelper
     end
     
     def access_token
-      url_to_json("#{BASE}oauth/access_token?client_id=#{@id}&client_secret=#{@secret}&grant_type=client_credentials")['access_token']
+      url_to_json("oauth/access_token?client_id=#{@id}&client_secret=#{@secret}&grant_type=client_credentials")['access_token']
     end
     
     def FacebookPage.temp
       self.new('1405477876366613', 'bf5306d4d7b7fe4346815f81475acc3c', 'AnysoftSoftwareCompany')
     end
-    
+    # 1405477876366613|bf5306d4d7b7fe4346815f81475acc3c
   end # end class FacebookPage
 
   
@@ -79,6 +79,15 @@ module FacebookHelper
     #facebook doesn't like line breaks, so this prints out str until it hits the first <br> or <br /> -- /<br( \/)?>/
     index = /<br( \/)?>/ =~ str
     index ? str[0..(index - 1)] : str
+  end
+  
+  #--- Facebook Login ---
+  def facebook_login(scope: nil, success_method: nil, fail_method: nil)
+    render :partial => 'facebook_helper/fb_login', :locals => {:scope => scope, :success_method => success_method, :fail_method => fail_method}
+  end
+  
+  def facebook_page_login
+    render :partial => 'facebook_helper/fb_page_login'
   end
 end
 

@@ -3,7 +3,10 @@
     FB.init({
       appId      : '<%= j app_id %>',
       xfbml      : true,
-      version    : 'v2.5'
+      version    : 'v2.5',
+      cookie : true,
+      status : true,
+      oauth : true
     });
   };
 

@@ -39,27 +39,27 @@ module HtmlHelper
       options = collection.each.collect{ |item| [item.send(id_method), item.send(value_method)] }
     end  
     
-    options_for_select(options, selected_items: selected_ids, alphabetize: alphabetize)
+    farm_select_options(options, selected_items: selected_ids, alphabetize: alphabetize)
    end
   
   def array_for_select(arr, selected_items: nil, alphabetize: true)
     options = arr.each.collect{ |i| [i.to_s.titlecase, i] }
-    options_for_select(options, selected_items: selected_items, alphabetize: alphabetize)
+    farm_select_options(options, selected_items: selected_items, alphabetize: alphabetize)
     end
 
   def hash_for_select(hash, selected_items: nil, alphabetize: true)
     options = []
     hash.each{ |k, v| options << [v, k] }
-    options_for_select(options, selected_items: selected_items, alphabetize: alphabetize)
+    farm_select_options(options, selected_items: selected_items, alphabetize: alphabetize)
   end
 
   def array_of_hashes_for_select(array, id_key, value_key, selected_items: nil, alphabetize: true)
     options = array.collect{ |hash| [hash[id_key], hash[value_key]] }
-    options_for_select(options, selected_items: selected_items, alphabetize: alphabetize)
+    farm_select_options(options, selected_items: selected_items, alphabetize: alphabetize)
   end
 
-  def options_for_select(options, selected_items:nil, alphabetize: true)
+  def farm_select_options(options, selected_items: nil, alphabetize: true)
     options.sort!{ |x, y| x[0] <=> y[0] } if alphabetize 
-    super(options, selected_items)
+    options_for_select(options, selected_items)
   end
 end

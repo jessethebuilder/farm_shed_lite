@@ -1,0 +1,57 @@
+
+<div class="row">
+	<div class="col-xs-3">
+		<%= facebook_login(:scope => 'manage_pages publish_actions publish_pages', success_method: 'showPages(response.authResponse)') %>
+	</div>	
+	<div class="col-xs-4">
+		<div class="form-group">
+			<label for"account_select" class="control-label">Page</label>
+			<select id="account_select" name="account_select" class="form-control"></select>
+		</div>
+	</div>
+</div>
+
+
+
+<script>
+	function showPages(auth){
+		FB.api(
+			"/me/accounts", function(r){
+				if(r && !r.error){
+					var data = r['data'];		
+					for(var i = 0; i < data.length; i++){
+						var tag = '<option value="' + data[i].id + '" data-token="' + data[i].access_token + '">' + data[i].name + '</option>';
+						$('#account_select').append(tag);
+					}
+				}
+				
+				if(r && r.error){
+					console.log(r.error);
+				}	
+			}
+		);
+	}
+	
+	function publishToFacebook(id, token, message, link){
+		link = link || window.location.href;
+		message = message || '';
+		
+		FB.api('/' + id + '/feed', 'POST', 
+			{	
+				"access_token" : token,
+				"message" : message,
+				"link" : link
+			}, function(response){
+				console.log(response);
+			});
+	}
+	
+	$(document).ready(function(){
+		$('#account_select').change(function(){
+			var id = $(this).val();
+			var token = $(this).find(':selected').data('token');
+			publishToFacebook(id, token);
+		});
+	});
+</script>
+

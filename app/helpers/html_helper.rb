@@ -32,14 +32,14 @@ module HtmlHelper
   end
   
   #------------ For Select tools -----------------------
-  def for_select(collection, id_method, value_method, selected_ids: nil, alphabetize: true)
+  def for_select(collection, id_method, value_method, selected_items: nil, alphabetize: true)
     if block_given?
       options = collection.each.collect{ |item| [item.send(id_method), item.send(value_method), yield(item)] }
     else
       options = collection.each.collect{ |item| [item.send(id_method), item.send(value_method)] }
     end  
     
-    farm_select_options(options, selected_items: selected_ids, alphabetize: alphabetize)
+    farm_select_options(options, selected_items: selected_items, alphabetize: alphabetize)
    end
   
   def array_for_select(arr, selected_items: nil, alphabetize: true)
@@ -55,6 +55,16 @@ module HtmlHelper
 
   def array_of_hashes_for_select(array, id_key, value_key, selected_items: nil, alphabetize: true)
     options = array.collect{ |hash| [hash[id_key], hash[value_key]] }
+    farm_select_options(options, selected_items: selected_items, alphabetize: alphabetize)
+  end
+  
+  def hash_of_arrays_for_select(hash, data_attr: 'key', selected_items: nil, alphabetize: true)
+    options = []
+    hash.each do |k, v|
+      v.each do |model|
+        options << [model, model, {"data-#{data_attr}" => k}]
+      end  
+    end   
     farm_select_options(options, selected_items: selected_items, alphabetize: alphabetize)
   end
 

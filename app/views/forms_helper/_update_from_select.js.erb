@@ -1,0 +1,8 @@
+$('<%= j modal_selector %>').modal('hide');
+
+<% if obj.errors.count > 0 %>
+  	alert("Client DID NOT SAVE. Errors:" + '<%= j obj.errors.messages.to_s.html_safe %>');
+<% else %>
+	$('<%= j select_selector %>').append($('<option>', {value: '<%= j obj.send(val_method).to_s %>'}).text('<%= j obj.send(text_method).to_s %>'));
+	$('<%= j select_selector %>').val('<%= j obj.send(val_method).to_s %>');
+<% end %>

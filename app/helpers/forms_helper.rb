@@ -1,16 +1,7 @@
 module FormsHelper
-  # def blank_associated_form(f, association)
-    # o = f.object.class.reflect_on_association(association).klass.new
-    # fields = f.fields_for(association, o, :child_index => "new_#{association}") do |builder|
-      # render(association.to_s.pluralize + "/embedded_form", :f => builder)
-    # end
-#   
-   # html = "<script>
-            # function 
-   # "
-# 
-#   
-  # end
-#   
-#   
-end
+  def update_select_from_modal(obj, select_selector, modal_selector: '#express_modal', val_method: :id, text_method: :name)
+    render :partial => 'forms_helper/update_from_select', :locals => {:obj => obj, :modal_selector => modal_selector, 
+                                                                      :select_selector => select_selector,
+                                                                      :val_method => val_method, :text_method => text_method}
+  end
+end      

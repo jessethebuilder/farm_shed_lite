@@ -1,0 +1,33 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Farm Cats</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Description</th>
+      <th>Main image</th>
+      <th>Farm cat</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @farm_cats.each do |farm_cat| %>
+      <tr>
+        <td><%= farm_cat.name %></td>
+        <td><%= farm_cat.description %></td>
+        <td><%= farm_cat.main_image %></td>
+        <td><%= farm_cat.farm_cat_id %></td>
+        <td><%= link_to 'Show', farm_cat %></td>
+        <td><%= link_to 'Edit', edit_farm_cat_path(farm_cat) %></td>
+        <td><%= link_to 'Destroy', farm_cat, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Farm cat', new_farm_cat_path %>

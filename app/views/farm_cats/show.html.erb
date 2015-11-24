@@ -1,0 +1,24 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @farm_cat.name %>
+</p>
+
+<p>
+  <strong>Description:</strong>
+  <%= @farm_cat.description %>
+</p>
+
+<p>
+  <strong>Main image:</strong>
+  <%= @farm_cat.main_image %>
+</p>
+
+<p>
+  <strong>Farm cat:</strong>
+  <%= @farm_cat.farm_cat_id %>
+</p>
+
+<%= link_to 'Edit', edit_farm_cat_path(@farm_cat) %> |
+<%= link_to 'Back', farm_cats_path %>

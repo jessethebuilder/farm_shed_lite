@@ -6,6 +6,8 @@ class CreateFarmCats < ActiveRecord::Migration
       t.string :main_image
       t.integer :farm_cat_id
       t.string :slug
+      t.string :has_farm_cats_type
+      t.integer :has_farm_cats_id
 
       t.timestamps null: false
     end

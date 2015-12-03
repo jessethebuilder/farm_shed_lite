@@ -1,6 +1,6 @@
 require 'rest_helper.rb'
 
-require '../../lib/farm_shed/facebook_page'
+# require '../../lib/farm_shed/facebook_page'
 
 module FacebookHelper
   

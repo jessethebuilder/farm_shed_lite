@@ -1,0 +1,14 @@
+<style>
+	.tweet_button{ 
+		position: relative; 
+  		top: 7px;
+  		margin-left	: 5px;			
+	}
+</style>
+
+<div class="share_buttons">
+	<%= like_on_fb layout: fb_layout %>
+	<span class="tweet_button">
+		<%= tweet_button site_name, count: twitter_count, include_script: include_twitter_script %>
+	</span>	
+</div>

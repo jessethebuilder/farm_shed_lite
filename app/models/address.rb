@@ -1,4 +1,6 @@
 class Address < ActiveRecord::Base
+  include ActionView::Helpers::TagHelper
+  
   belongs_to :has_address, :polymorphic => true
 
   STATE_HASH = {"AL"=>"Alabama", "AK"=>"Alaska", "AZ"=>"Arizona", "AR"=>"Arkansas", "CA"=>"California", "CO"=>"Colorado", "CT"=>"Connecticut", "DC"=>"Washington DC", "DE"=>"Delaware", "FL"=>"Florida", "GA"=>"Georgia", "HI"=>"Hawaii", "ID"=>"Idaho", "IL"=>"Illinois", "IN"=>"Indiana", "IA"=>"Iowa", "KS"=>"Kansas", "KY"=>"Kentucky", "LA"=>"Louisiana", "ME"=>"Maine", "MD"=>"Maryland", "MA"=>"Massachusetts", "MI"=>"Michigan", "MN"=>"Minnesota", "MS"=>"Mississippi", "MO"=>"Missouri", "MT"=>"Montana", "NE"=>"Nebraska", "NV"=>"Nevada", "NH"=>"New Hampshire", "NJ"=>"New Jersey", "NM"=>"New Mexico", "NY"=>"New York", "NC"=>"North Carolina", "ND"=>"North Dakota", "OH"=>"Ohio", "OK"=>"Oklahoma", "OR"=>"Oregon", "PA"=>"Pennsylvania", "RI"=>"Rhode Island", "SC"=>"South Carolina", "SD"=>"South Dakota", "TN"=>"Tennessee", "TX"=>"Texas", "UT"=>"Utah", "VT"=>"Vermont", "VA"=>"Virginia", "WA"=>"Washington", "WV"=>"West Virginia", "WI"=>"Wisconsin", "WY"=>"Wyoming"}
@@ -19,13 +21,19 @@ class Address < ActiveRecord::Base
 
   def google_embedded_map(api_key, prefix: nil, zoom: 16)
     html = '<iframe src="'
-    html += google_embedded_map_url(api_key, prefix: prefix, zoom: zoom)
-    html += '"'
 
+    html += google_embedded_map_url(api_key, prefix: prefix, zoom: zoom)
+    html += '"></iframe>'
+
+    # html = content_tag :iframe, src: google_embedded_map_url(api_key, prefix: prefix, zoom: zoom)
     html.html_safe
   end
-
-  def google_embedded_map_url(api_key, prefix: nil, maptype:'roadmap', zoom: 16)
+  
+  # def google_embedded_directions(api_key, prefix: nil, zoom: 16)
+    
+  # end
+  
+  def google_embedded_map_url(api_key, prefix: nil, maptype: 'roadmap', zoom: 16)
     url = "https://www.google.com/maps/embed/v1/place?key="
     url += api_key
     url += "&maptype=#{maptype}&zoom=#{zoom}&q="
@@ -40,6 +48,7 @@ class Address < ActiveRecord::Base
     url += "&origin=my+location&destination="
     url += "#{prefix},+" if prefix
     url += self.to_s.parameterize
+    url += '"'
     url
   end
 

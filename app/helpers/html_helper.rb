@@ -68,8 +68,9 @@ module HtmlHelper
     farm_select_options(options, selected_items: selected_items, alphabetize: alphabetize)
   end
 
-  def farm_select_options(options, selected_items: nil, alphabetize: true)
+  def farm_select_options(options, selected_items: nil, alphabetize: true, escape: true)
     options.sort!{ |x, y| x[0] <=> y[0] } if alphabetize 
+    # options.each
     options_for_select(options, selected_items)
   end
 end

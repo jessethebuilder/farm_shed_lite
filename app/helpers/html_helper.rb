@@ -39,7 +39,7 @@ module HtmlHelper
       options = collection.each.collect{ |item| [item.send(id_method), item.send(value_method)] }
     end  
     
-    farm_select_options(options, selected_items: selected_items, alphabetize: alphabetize)
+    farm_select_options(options.sort_by{ |o| o[0].to_s }, selected_items: selected_items, alphabetize: false)
    end
   
   def array_for_select(arr, selected_items: nil, alphabetize: true)

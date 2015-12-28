@@ -28,3 +28,11 @@
   border-radius: $rad;
 }
  
+@mixin rotate($deg){
+      -webkit-transform: rotate($deg);
+    -moz-transform: rotate($deg);
+    -o-transform: rotate($deg);
+    -ms-transform: rotate($deg);
+    transform: rotate($deg);
+} 
+ 

@@ -1,118 +1,127 @@
-<div class="row" id="login_with_facebook_row">
-	<div class="col-sm-12">
-		<div class="form-group">
-			<a href="login_with_facebook" id="login_with_facebook" class="btn btn-default">Login with Facebook</a>
-		</div>
-	</div><!-- col -->
-</div><!-- row -->
-
-<div class="row" id="push_to_facebook_row">	
-	<div class="col-sm-4">
-		<div class="form-group">
-			<label for="account_select" class="control-label">Page</label>
-			<select id="facebook_account_select" name="account_select" class="form-control"></select>
-		</div>		
-	</div><!-- col -->
+<div class="well" id="login_with_facebook_widget">
+	<div class="row" id="login_with_facebook_row">
+		<div class="col-sm-12">
+			<div class="form-group">
+				<%= link_to 'x', 'close_facebook_widget', class: 'close pull-right', id: 'close_facebook_widget' %>
+				<span id="login_with_facebook_button_container">
+					<a href="login_with_facebook" id="login_with_facebook" class="btn btn-default">Login with Facebook</a>
+				</span>
+			</div>
+		</div><!-- col -->
+	</div><!-- row -->
 	
-	
-	<div class="col-sm-6">			
-		<div class="form-group">
-			<label for="facebook_message" class="control-label">Message</label>
-			<textarea id="facebook_message" class="form-control" rows="1" placeholder="optional..."></textarea>
-		</div>
-	</div><!-- col -->
-	
-	<div class="col-xs-2">
-		<div class="form-group">
-			<label class="control-label">&nbsp;</label>
-			<%= link_to 'Publish', 'publish_to_facebook', class: 'btn btn-primary form-control', id: 'publish_to_facebook' %>
-		</div>			
-	</div><!-- col -->
-</div><!-- row -->				
-			
-<script>
-	function showFbPages(){
-		FB.api(
-			"/me/accounts", function(r){
-				if(r && !r.error){
-					var data = r['data'];		
-					for(var i = 0; i < data.length; i++){
-						var tag = '<option value="' + data[i].id + '" data-token="' + data[i].access_token + '">' + data[i].name + '</option>';
-						$('#facebook_account_select').append(tag);
-					}
-				}
+	<div class="row" id="push_to_facebook_row">	
+		<div class="col-sm-4">
+			<div class="form-group">
+				<label for="account_select" class="control-label">Page</label>
+				<select id="facebook_account_select" name="account_select" class="form-control"></select>
+			</div>		
+		</div><!-- col -->
+		
+		
+		<div class="col-sm-6">			
+			<div class="form-group">
+				<label for="facebook_message" class="control-label">Message</label>
+				<textarea id="facebook_message" class="form-control" rows="1" placeholder="optional..."></textarea>
+			</div>
+		</div><!-- col -->
+		
+		<div class="col-xs-2">
+			<div class="form-group">
+				<label class="control-label">&nbsp;</label>
+				<%= link_to 'Publish', 'publish_to_facebook', class: 'btn btn-primary form-control', id: 'publish_to_facebook' %>
+			</div>			
+		</div><!-- col -->
+	</div><!-- row -->				
 				
-				if(r && r.error){
-					console.log(r.error);
-				}	
+	<script>
+		function showFbPages(){
+			FB.api(
+				"/me/accounts", function(r){
+					if(r && !r.error){
+						var data = r['data'];		
+						for(var i = 0; i < data.length; i++){
+							var tag = '<option value="' + data[i].id + '" data-token="' + data[i].access_token + '">' + data[i].name + '</option>';
+							$('#facebook_account_select').append(tag);
+						}
+					}
+					
+					if(r && r.error){
+						console.log(r.error);
+					}	
+				}
+			);
+		}
+	
+		//--- Callbacks --
+		function fbLoginStatusAtLoadCallback(response){
+			var status = response.status;
+			if(status == "connected"){
+				fbLoginSuccess(response);
 			}
-		);
-	}
-
-	//--- Callbacks --
-	function fbLoginStatusAtLoadCallback(response){
-		var status = response.status;
-		if(status == "connected"){
-			fbLoginSuccess(response);
 		}
-	}
-	
-	function fbLoginSuccess(response){
-		showFbPages();
 		
-		var $login_button = $('#login_with_facebook');
+		function fbLoginSuccess(response){
+			showFbPages();
+			
+			// var $login_button = $('#login_with_facebook');
+			
+			$('#push_to_facebook_row').show();
+			
+			FB.api('/me', function(response){
+				$('#login_with_facebook_button_container').html('You are logged into Facebook as ' + response.name)	
+			});
+		}	
 		
-		$('#push_to_facebook_row').show();
-		
-		FB.api('/me', function(response){
-			$login_button.closest('.form-group').html('You are logged into Facebook as ' + response.name)	
-		});
-	}	
-	
-	function fbLoginFailure(response){
-		alert('Facebook login failed. If you continue to have problems, please contact support@anysoft.us');
-		
-		// $('#login_with_facebook_row').show();
-		$('#push_to_facebook_row').hide();
-		
-	}
-	
-	function afterFacebookPublishCallback(response){
-		if(response.error){
-			alert("Error: " + response.error.error_user_msg + "\n\nPlease reload the page an try again.\n\nIf you continue to have problems, contact Anysoft and support@anysoft.us");
-		} else {
+		function fbLoginFailure(response){
+			alert('Facebook login failed. If you continue to have problems, please contact support@anysoft.us');
+			
+			// $('#login_with_facebook_row').show();
+			$('#push_to_facebook_row').hide();
 			
 		}
-	}
+		
+		function afterFacebookPublishCallback(response){
+			if(response.error){
+				alert("Error: " + response.error.error_user_msg + "\n\nPlease reload the page an try again.\n\nIf you continue to have problems," +
+					  " please contact support@anysoft.us");
+			} else {
+					
+			}
+		}
+		
+		//--- end Callcacks ---
 	
-	//--- end Callcacks ---
-
-	function publishThisToFacebook(){
-		var $account_select = $('#facebook_account_select');
-		var $selected = $account_select.find(':selected');
+		function publishThisToFacebook(){
+			var $account_select = $('#facebook_account_select');
+			var $selected = $account_select.find(':selected');
+				
+			var id = $selected.val();
+			var token = $selected.data('token');
 			
-		var id = $selected.val();
-		var token = $selected.data('token');
+			var message = $('#facebook_message').val();
+			
+			publishToFacebook(id, token, message);			
+		}
 		
-		var message = $('#facebook_message').val();
 		
-		publishToFacebook(id, token, message);			
-	}
-	
-	
-	$(document).ready(function(){
-		$('#push_to_facebook_row').hide();
-		
-		$('#publish_to_facebook').click(function(e){
-			e.preventDefault();
-			publishThisToFacebook();
+		$(document).ready(function(){
+			$('#push_to_facebook_row').hide();
+			
+			$('#publish_to_facebook').click(function(e){
+				e.preventDefault();
+				publishThisToFacebook();
+			});
+			
+			$('#login_with_facebook').click(function(e){
+				e.preventDefault();
+				facebookLogin('manage_pages publish_pages');
+			});
+			
+			$('#close_facebook_widget').click(function(e){
+				e.preventDefault();
+				$('#login_with_facebook_widget').hide(500);
+			});
 		});
-		
-		$('#login_with_facebook').click(function(e){
-			e.preventDefault();
-
-			facebookLogin('manage_pages publish_pages');
-		});
-	});
-</script>
-
+	</script>
+</div>

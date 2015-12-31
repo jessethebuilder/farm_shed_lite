@@ -1,4 +1,4 @@
-<div class="row">
+<div class="row login_with_facebook_row">
 	<div class="col-sm-12">
 		<div class="form-group">
 			<a href="login_with_facebook" id="login_with_facebook" class="btn btn-default">Login with Facebook</a>
@@ -6,7 +6,7 @@
 	</div><!-- col -->
 </div><!-- row -->
 
-<div class="row">	
+<div class="row push_to_facebook_row">	
 	<div class="col-sm-4">
 		<div class="form-group">
 			<label for="account_select" class="control-label">Page</label>
@@ -30,15 +30,8 @@
 	</div><!-- col -->
 </div><!-- row -->				
 			
-<div class="row">
-</div><!-- row -->
-
-<div class="row">
-</div><!-- row -->
-
-
 <script>
-	function showFbPages(auth){
+	function showFbPages(){
 		FB.api(
 			"/me/accounts", function(r){
 				if(r && !r.error){
@@ -69,13 +62,20 @@
 		
 		var $login_button = $('#login_with_facebook');
 		
+		// $('#login_with_facebook_row').hide();
+		$('#push_to_facebook_row').show();
+		
 		FB.api('/me', function(response){
-			$login_button.closest('.form-group').html('You are logged into Facebook as ' + response.name)	
+			// $login_button.closest('.form-group').html('You are logged into Facebook as ' + response.name)	
 		});
 	}	
 	
 	function fbLoginFailure(response){
 		alert('Facebook login failed. If you continue to have problems, please contact support@anysoft.us');
+		
+		// $('#login_with_facebook_row').show();
+		$('#push_to_facebook_row').hide();
+		
 	}
 	
 	function afterFacebookPublishCallback(response){
@@ -93,7 +93,7 @@
 		
 		var message = $('#facebook_message').val();
 		
-		publishToFacebook(id, token, message, 'localhost:3000/fb_login');			
+		publishToFacebook(id, token, message);			
 	}
 	
 	
@@ -105,7 +105,8 @@
 		
 		$('#login_with_facebook').click(function(e){
 			e.preventDefault();
-			facebookLogin('manage_pages publish_actions publish_pages');
+
+			facebookLogin('manage_pages publish_pages');
 		});
 	});
 </script>

@@ -28,7 +28,7 @@ function facebookLogin(scope){
  				fbLoginFailure(response);
  			}
     	}
-	}, scope);
+	}, {scope: scope});
 }	
 
 function referenceFacebookPage(page_id){

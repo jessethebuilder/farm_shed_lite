@@ -1,0 +1,74 @@
+<%= facebook_sdk('140936849442574') %>
+
+<div class="container" style="margin-top: 50px;">
+	<div class="row well">
+		<div class="col-xs-4">
+			<fb:login-button scope="public_profile,email" onlogin="checkLoginState();"></fb:login-button>
+			
+			<div id="status">
+				
+			</div>
+			
+		</div><!-- col -->
+		
+		<div class="col-xs-4">
+			
+		</div><!-- col -->
+		
+		<div class="col-xs-4">
+			
+		</div><!-- col -->
+	</div><!-- row -->
+</div>
+
+<script>
+
+
+
+	function fbLoginStatusChangeCallback(response, success_methods) {
+    	// console.log('statusChangeCallback');
+    	// console.log(response);
+    	if (response.status === 'connected') {
+      		doMethods(success_methods);
+    	} else if (response.status === 'not_authorized') {
+      		document.getElementById('status').innerHTML = 'Please log into this app.';
+    	} else {
+   			document.getElementById('status').innerHTML = 'Please log into Facebook.';
+    	}
+  	}
+  	
+  	function fbUserPages(){
+  		var pages
+  		
+  		FB.api('/me/accounts', function(response){
+  			pages = response;
+  		});
+  		
+  		return pages;
+  	}
+  	
+  	function listUserPages(){	
+  		alert(fbUserPages());
+  	}
+  
+    function checkLoginState() {
+    	FB.getLoginStatus(function(response) {
+      		fbLoginStatusChangeCallback(response, [testAPI, listUserPages]);
+    	});
+  	}
+  
+  	// $(window).load(function(){
+    	// FB.getLoginStatus(function(response) {
+      		// fbLoginStatusChangeCallback(response, testAPI);
+    	// });
+  	// });
+  	 
+    function testAPI() {
+    console.log('Welcome!  Fetching your information.... ');
+    FB.api('/me', function(response) {
+      console.log('Successful login for: ' + response.name);
+      document.getElementById('status').innerHTML =
+        'Thanks for logging in, ' + response.name + '!';
+    });
+  }
+</script>

@@ -1,14 +1,25 @@
 <script>
+  var facebook_sdk_app_id = '<%= j app_id %>';
+
   window.fbAsyncInit = function() {
     FB.init({
-      appId      : '<%= j app_id %>',
+      appId      : facebook_sdk_app_id,
       xfbml      : true,
       version    : 'v2.5',
       cookie : true,
       status : true,
       oauth : true
     });
+    
+    
+    if(typeof(fbLoginStatusAtLoadCallback) == "function"){
+    	FB.getLoginStatus(function(response) {
+      		fbLoginStatusAtLoadCallback(response);
+    	});
+    }
   };
+  
+  
 
   (function(d, s, id){
      var js, fjs = d.getElementsByTagName(s)[0];

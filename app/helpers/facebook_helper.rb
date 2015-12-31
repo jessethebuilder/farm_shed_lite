@@ -56,8 +56,8 @@ module FacebookHelper
     render :partial => 'facebook_helper/fb_login', :locals => {:scope => scope, :success_method => success_method, :fail_method => fail_method}
   end
   
-  def facebook_page_login
-    render :partial => 'facebook_helper/fb_page_login'
+  def push_to_facebook
+    render :partial => 'facebook_helper/push_to_facebook'
   end
 end
 

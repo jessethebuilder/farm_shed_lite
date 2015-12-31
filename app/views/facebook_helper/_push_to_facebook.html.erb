@@ -10,7 +10,17 @@
 		</div><!-- col -->
 	</div><!-- row -->
 	
+	<div class="row hidden">
+		<div class="col-xs-12">
+			<div id="pushed_to_facebook_box">
+				
+			</div>
+		</div>
+	</div>
+	
 	<div class="row" id="push_to_facebook_row">	
+		
+		
 		<div class="col-sm-4">
 			<div class="form-group">
 				<label for="account_select" class="control-label">Page</label>
@@ -44,9 +54,14 @@
 							var tag = '<option value="' + data[i].id + '" data-token="' + data[i].access_token + '">' + data[i].name + '</option>';
 							$('#facebook_account_select').append(tag);
 						}
+						
+						// Get the default select value from cookie
+						var account_selected = getCookie('farm_shed_default_facebook_page');
+						$('#facebook_account_select').val(account_selected);	
 					}
 					
 					if(r && r.error){
+						alert('An error occured. Please try again. If you continue to have problems, please contact support@anysoft.us')
 						console.log(r.error);
 					}	
 				}
@@ -63,11 +78,8 @@
 		
 		function fbLoginSuccess(response){
 			showFbPages();
-			
-			// var $login_button = $('#login_with_facebook');
-			
 			$('#push_to_facebook_row').show();
-			
+				
 			FB.api('/me', function(response){
 				$('#login_with_facebook_button_container').html('You are logged into Facebook as ' + response.name)	
 			});
@@ -75,10 +87,7 @@
 		
 		function fbLoginFailure(response){
 			alert('Facebook login failed. If you continue to have problems, please contact support@anysoft.us');
-			
-			// $('#login_with_facebook_row').show();
 			$('#push_to_facebook_row').hide();
-			
 		}
 		
 		function afterFacebookPublishCallback(response){
@@ -86,11 +95,14 @@
 				alert("Error: " + response.error.error_user_msg + "\n\nPlease reload the page an try again.\n\nIf you continue to have problems," +
 					  " please contact support@anysoft.us");
 			} else {
-					
+				$pushed_box = $('#pushed_to_facebook_box');
+				$pushed_box.html('You sucessfully pushed to Facebook').closest('.row').removeClass('hidden');
+				$('#push_to_facebook_row').hide();		
 			}
 		}
 		
-		//--- end Callcacks ---
+		//--- end Callbacks ---
+
 	
 		function publishThisToFacebook(){
 			var $account_select = $('#facebook_account_select');
@@ -102,8 +114,14 @@
 			var message = $('#facebook_message').val();
 			
 			publishToFacebook(id, token, message);			
+			
+			var now = new Date();
+			var later = new Date();
+			later.setYear(now.getFullYear() + 20);
+				
+			// set a cookie
+			document.cookie = 'farm_shed_default_facebook_page=' + id + '; expires=' + later;
 		}
-		
 		
 		$(document).ready(function(){
 			$('#push_to_facebook_row').hide();
@@ -123,5 +141,15 @@
 				$('#login_with_facebook_widget').hide(500);
 			});
 		});
+		
+		$('#login_with_facebook_button_container').click(function(){
+			
+			// Get the default select value from cookie
+			var account_selected = getCookie('farm_shed_default_facebook_page');
+			alert(account_selected);
+			$('#facebook_account_select').val(account_selected);	
+	
+		});
+		
 	</script>
 </div>

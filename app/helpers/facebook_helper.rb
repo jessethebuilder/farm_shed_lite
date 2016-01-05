@@ -4,10 +4,10 @@ require 'rest_helper.rb'
 
 module FacebookHelper
   
-  def facebook_sdk(app_id, use_authentication: true)
+  def facebook_sdk(app_id)
     #this must be included to use any of these functions. Place just after opening <body> tag.
     #if use_authentication = true, you must include a facebookLoginStatusChangeCallback function in scope
-    render :partial => 'facebook_helper/facebook_sdk', :locals => {:app_id => app_id, :use_authentication => use_authentication}
+    render :partial => 'facebook_helper/facebook_sdk', :locals => {:app_id => app_id}
   end
 
   def follow_on_facebook_button(related, width: '225px', colorscheme: 'light', layout: 'standard', show_faces: true)

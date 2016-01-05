@@ -92,7 +92,7 @@
 		
 		function afterFacebookPublishCallback(response){
 			if(response.error){
-				alert("Error: " + response.error.error_user_msg + "\n\nPlease reload the page an try again.\n\nIf you continue to have problems," +
+				alert("Error: " + response.error.message + "\n\nPlease reload the page an try again.\n\nIf you continue to have problems," +
 					  " please contact support@anysoft.us");
 			} else {
 				$pushed_box = $('#pushed_to_facebook_box');
@@ -146,7 +146,7 @@
 			
 			// Get the default select value from cookie
 			var account_selected = getCookie('farm_shed_default_facebook_page');
-			alert(account_selected);
+			// alert(account_selected);
 			$('#facebook_account_select').val(account_selected);	
 	
 		});

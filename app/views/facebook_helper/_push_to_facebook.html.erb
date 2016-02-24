@@ -49,7 +49,10 @@
 			FB.api(
 				"/me/accounts", function(r){
 					if(r && !r.error){
-						var data = r['data'];		
+						var data = r['data'];
+								
+						console.log(data);
+						
 						for(var i = 0; i < data.length; i++){
 							var tag = '<option value="' + data[i].id + '" data-token="' + data[i].access_token + '">' + data[i].name + '</option>';
 							$('#facebook_account_select').append(tag);

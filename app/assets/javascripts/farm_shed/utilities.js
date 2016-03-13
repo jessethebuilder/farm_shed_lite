@@ -28,6 +28,25 @@ function isScrolledIntoView(elem){
     // return elemTop >= docViewTop;
 }
 
+function isInView(elem, modifier){
+	// update of isScrolledIntoView. 
+	if(typeof modifier == 'undefined'){
+		modifier = 0;
+	}
+    var $elem = $(elem);
+    var $window = $(window);
+
+    var docViewTop = $window.scrollTop();
+    var docViewBottom = docViewTop + $window.height();
+
+    var elemTop = $elem.offset().top;
+    var elemBottom = elemTop + $elem.height();
+
+   return ((elemBottom + modifier <= docViewBottom) && (elemTop >= docViewTop));
+    // return elemTop >= docViewTop;
+}
+
+
 function doMethods(methods){
   //accepts either a method or an array of methods. Put method in array if necessary
   if(typeof methods == "function"){methods = [methods];}

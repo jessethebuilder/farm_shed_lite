@@ -28,22 +28,24 @@ function isScrolledIntoView(elem){
     // return elemTop >= docViewTop;
 }
 
-function isInView(elem, modifier){
-	// update of isScrolledIntoView. 
+function isFullyInView(e){
+	isScrolledIntoView(e);
+}
+
+function isInView(e, modifier){
+	// modifier is integer number of pixels the element can be scrolled into view, before return true
 	if(typeof modifier == 'undefined'){
 		modifier = 0;
 	}
-    var $elem = $(elem);
+    var $e = $(e);
     var $window = $(window);
 
     var docViewTop = $window.scrollTop();
     var docViewBottom = docViewTop + $window.height();
 
-    var elemTop = $elem.offset().top;
-    var elemBottom = elemTop + $elem.height();
-
-   return ((elemBottom + modifier <= docViewBottom) && (elemTop >= docViewTop));
-    // return elemTop >= docViewTop;
+    var elemTop = $e.offset().top;
+    // var elemBottom = elemTop + $elem.height();
+   return elemTop < docViewBottom;
 }
 
 

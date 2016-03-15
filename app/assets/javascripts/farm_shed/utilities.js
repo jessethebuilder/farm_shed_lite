@@ -45,7 +45,7 @@ function isInView(e, modifier){
 
     var elemTop = $e.offset().top;
     // var elemBottom = elemTop + $elem.height();
-   return elemTop < docViewBottom;
+   return elemTop + modifier < docViewBottom;
 }
 
 

@@ -27,6 +27,24 @@
   -moz-border-radius: $rad;
   border-radius: $rad;
 }
+
+@mixin border_radius_right($rad){
+  -webkit-border-top-right-radius: $rad;
+  -webkit-border-bottom-right-radius: $rad;
+  -moz-border-radius-topright: $rad;
+  -moz-border-radius-bottomright: $rad;
+  border-top-right-radius: $rad;
+  border-bottom-right-radius: $rad;
+}
+
+@mixin border_radius_left($rad){
+  -webkit-border-top-left-radius: $rad;
+  -webkit-border-bottom-left-radius: $rad;
+  -moz-border-radius-topleft: $rad;
+  -moz-border-radius-bottomleft: $rad;
+  border-top-left-radius: $rad;
+  border-bottom-left-radius: $rad;
+}
  
 @mixin rotate($deg){
       -webkit-transform: rotate($deg);

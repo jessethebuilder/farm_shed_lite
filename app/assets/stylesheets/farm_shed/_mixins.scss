@@ -62,3 +62,9 @@
   -o-user-select: none;
   user-select: none;  
 }
+
+@mixin box_shadow($shadow){
+  -webkit-box-shadow: 10px 10px 5px 0px rgba($shadow);
+  -moz-box-shadow: 10px 10px 5px 0px rgba($shadow);
+  box-shadow: 10px 10px 5px 0px rgba($shadow);
+}

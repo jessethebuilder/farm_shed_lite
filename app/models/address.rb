@@ -29,6 +29,10 @@ class Address < ActiveRecord::Base
     html.html_safe
   end
   
+  def google_map_link
+    "https://www.google.com/maps/place/#{to_s.gsub(' ', '+')}/@#{lat},#{lon},17z/data=!3m1!4b1!4m2!3m1!1s0x548fbf599dca6039:0xf468b51315c688e5"
+  end
+  
   # def google_embedded_directions(api_key, prefix: nil, zoom: 16)
     
   # end

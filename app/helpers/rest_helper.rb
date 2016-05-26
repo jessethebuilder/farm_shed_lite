@@ -7,8 +7,7 @@ module RestHelper
     json = RestClient.send(method, url, params)
     
     json
-    # JSON.parse(json) if json
-    # RestClient.post(url, params)  
+    JSON.parse(json) if json 
   end
   
   def encode_url(url)

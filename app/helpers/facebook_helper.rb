@@ -1,4 +1,4 @@
-require 'rest_helper.rb'
+require '../../lib/farm_shed/rest_helper.rb'
 
 # require '../../lib/farm_shed/facebook_page'
 

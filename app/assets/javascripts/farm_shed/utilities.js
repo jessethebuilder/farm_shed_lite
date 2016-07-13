@@ -10,6 +10,10 @@ function removeQueryString(url){
   return url.split("?")[0];
 }
 
+function stripQueryString(url){
+	return removeQueryString(url);
+}
+
 function toTitleCase(str){
     return str.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
 }
@@ -81,3 +85,30 @@ function getCookie(cname) {
 	}
 	return "";
 }
+
+  function putInColsV(selector, item_selector){
+    // Cols are designated with .anchor_col
+    // Headers are desinated with .header_row
+    var results = $(selector);
+
+    for(var i = 0; i < results.length; i++){
+      var r = $(results[i]);
+      var rows = r.find(item_selector);
+      var cols = r.find('.anchor_col');
+
+      var per_col = parseInt(rows.length / cols.length);
+      if(rows.length % cols.length != 0) per_col++;
+
+      var first_index = 0;
+      for(var j = 0; j < cols.length; j++){
+        var col = $(cols[j]);
+        var some_rows = rows.slice(first_index, first_index + per_col);
+        if(some_rows.length > 0){
+          col.append(some_rows);
+        } else {
+          col.find('.header_row').hide();
+        }
+        first_index = first_index + per_col;
+      }
+    }
+  }

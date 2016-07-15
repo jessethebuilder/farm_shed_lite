@@ -49,6 +49,6 @@ group :production do
   # gem 'rails_12factor'
 end
 
-ruby '2.1.5'
+ruby '2.2.4'
 
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]

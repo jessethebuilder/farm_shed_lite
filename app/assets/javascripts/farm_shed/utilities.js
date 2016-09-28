@@ -74,7 +74,7 @@ function hex(x) {
   return isNaN(x) ? "00" : hexDigits[(x - x % 16) / 16] + hexDigits[x % 16];
 }
 
-		
+
 function getCookie(cname) {
 	var name = cname + "=";
 	var ca = document.cookie.split(';');
@@ -112,3 +112,32 @@ function getCookie(cname) {
       }
     }
   }
+
+	function imageExists(url){
+	var http = new XMLHttpRequest();
+	http.open('HEAD', url, false);
+	http.send();
+	return http.status != 404;
+}
+
+function showOnlyAtIndex(klass, nth){
+	var elements = document.getElementsByClassName(klass);
+	if(nth < 0){
+		nth = elements.length + nth;
+	}
+
+	// Could use some error checking for nth values that do not make sense
+
+	for(var i = 0; i < elements.length; i++){
+		elements[i].style.display = 'none';
+	}
+	elements[nth].style.display = "block";
+}
+
+function showOnlyFirst(klass){
+	showOnlyAtIndex(klass, 1);
+}
+
+function showOnlyLast(klass){
+	showOnlyAtIndex(klass, -1);
+}

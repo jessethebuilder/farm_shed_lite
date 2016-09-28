@@ -13,7 +13,7 @@ gemspec
 # To use a debugger
 # gem 'byebug', group: [:development, :test]
 
-# gem 'farm_slugs', :git => 'https://github.com/jessethebuilder/farm_slugs'
+gem 'farm_ruby', :git => 'https://github.com/jessethebuilder/farm_farm_ruby'
 # gem 'farm_tools', :path => 'C:\Users\Bucky\Desktop\jesseweb\farm_tools\farm_tools'
 
 group :test, :development do

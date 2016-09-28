@@ -135,7 +135,7 @@ function showOnlyAtIndex(klass, nth){
 }
 
 function showOnlyFirst(klass){
-	showOnlyAtIndex(klass, 1);
+	showOnlyAtIndex(klass, 0);
 }
 
 function showOnlyLast(klass){

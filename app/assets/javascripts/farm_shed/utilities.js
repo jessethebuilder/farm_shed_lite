@@ -18,6 +18,19 @@ function toTitleCase(str){
     return str.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
 }
 
+function queryStringToObject(){
+  var loc = window.location;
+  var search_array = loc.search.replace(/^\?/, '').split('&');
+  var search = {};
+
+  for(var i = 0; i < search_array.length; i++){
+    var split = search_array[i].split('=');
+    search[split[0]] = split[1];
+  }
+
+  return search;
+}
+
 function isScrolledIntoView(elem){
     var $elem = $(elem);
     var $window = $(window);
